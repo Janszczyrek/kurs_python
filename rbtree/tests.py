@@ -55,6 +55,7 @@ class TestRBtree(unittest.TestCase):
         self.tree.inorder_print()
         self.tree.delete(142)
         self.tree.inorder_print()
+        self.assertEqual(test_rb_properties(self.tree), True)
     # def test_random_insert(self):
     #     tree = RBtree()
     #     [tree.insert(random.randint(-100, 100)) for x in range(1000)]

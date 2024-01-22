@@ -41,6 +41,33 @@ class RBtree:
 
         def __str__(self):
             return f"data: {self.data}, color: {self.color}"
+        
+        @property
+        def sibling(self):
+            if self.parent is None:
+                return None
+            if self is self.parent.leftChild:
+                return self.parent.rightChild
+            else:
+                return self.parent.leftChild
+        @property
+        def has_red_child(self):
+            if (
+                self.rightChild is not None
+                and self.rightChild.color is self.RED
+                or self.leftChild is not None
+                and self.leftChild.color is self.RED
+            ):
+                return True
+            else:
+                return False
+    
+        @property
+        def successor(self):
+            x = self
+            while x.leftChild is not None:
+                x = x.leftChild
+            return x
 
     def right_rotation(self, node):
         x = node.leftChild
@@ -106,30 +133,8 @@ class RBtree:
         node = self.recolor(node)
         return node
 
-    def sibling(self, node):
-        if node.parent is None:
-            return None
-        if node is node.parent.leftChild:
-            return node.parent.rightChild
-        else:
-            return node.parent.leftChild
 
-    def hasRedChild(self, node):
-        if (
-            node.rightChild is not None
-            and node.rightChild.color is self.Rbnode.RED
-            or node.leftChild is not None
-            and node.leftChild.color is self.Rbnode.RED
-        ):
-            return True
-        else:
-            return False
 
-    def successor(self, node):
-        x = node
-        while x.leftChild is not None:
-            x = x.leftChild
-        return x
 
     def replacement_node(self, node):
         if node.leftChild is None and node.rightChild is None:
@@ -150,12 +155,7 @@ class RBtree:
             replacement is None or replacement.color is self.RBnode.BLACK
         ) and (node.color is self.RBnode.BLACK)
         parent = node.parent
-        sibling = None
-
-        if node is parent.leftChild:
-            sibling = parent.rightChild
-        else:
-            sibling = parent.leftChild
+        sibling = node.sibling
 
 
         if replacement is None:
@@ -167,7 +167,7 @@ class RBtree:
                 else:
                     if sibling is not None:
                         sibling.color = self.RBnode.RED
-                if node is node.parent.leftChild:
+                if node is parent.leftChild:
                     parent.leftChild = None
                 else:
                     parent.rightChild = None
@@ -178,7 +178,7 @@ class RBtree:
                 node.leftChild = None
                 node.rightChild = None
             else:
-                if node is node.parent.leftChild:
+                if node is parent.leftChild:
                     parent.leftChild = replacement
                 else:
                     parent.rightChild = replacement
@@ -197,11 +197,7 @@ class RBtree:
         if node is self.root:
             return
         parent = node.parent
-        sibling = None
-        if node is parent.leftChild:
-            sibling = parent.rightChild
-        else:
-            sibling = parent.leftChild
+        sibling = node.sibling
         if sibling is None:
             self.double_black_restore(parent)
         else:
@@ -215,12 +211,7 @@ class RBtree:
                     parent = self.left_rotation(parent)
                 self.double_black_restore(node)
             else:
-                if (
-                    node.rightChild is not None
-                    and node.rightChild.color is self.Rbnode.RED
-                    or node.leftChild is not None
-                    and node.leftChild.color is self.Rbnode.RED
-                ):
+                if node.has_red_child:
                     if (
                         sibling.leftChild is not None
                         and sibling.leftChild.color is self.RBnode.RED
