@@ -50,12 +50,14 @@ def test_rb_properties_helper(
 class TestRBtree(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        # wizualizacja stworzonego drzewa znajduje się w pliku drzewo_test_1.jpg i została stworzona w narzędziu:
+        # wizualizacja stworzonego drzewa znajduje się w pliku
+        # drzewo_test_1.jpg i została stworzona w narzędziu: 
         # https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
         cls.tree = RBtree()
         cls.tree.insert(1, 19, 0, 5, 2, 2, 1, 10)
         cls.tree.insert(142)
         cls.tree.insert(18)
+        cls.tree.tree_print()
 
     def test_random_insert(self):
         tree = RBtree()
@@ -120,7 +122,13 @@ class TestRBtree(unittest.TestCase):
         self.assertEqual(tree.root.data, 2)
 
     def test_traversal(self):
-        self.assertEqual([x.data for x in self.tree.preorder_traverse(self.tree.root)],[5,1,0,2,1,2,19,10,18,142])
-        self.assertEqual([x.data for x in self.tree.inorder_traverse(self.tree.root)],[0,1,1,2,2,5,10,18,19,142])
-        self.assertEqual([x.data for x in self.tree.postorder_traverse(self.tree.root)],[0,1,2,2,1,18,10,142,19,5])
+        self.assertEqual([x.data for x in 
+        self.tree.preorder_traverse(self.tree.root)],[5,1,0,2,1,2,19,10,18,142])
+
+        self.assertEqual([x.data for x in 
+        self.tree.inorder_traverse(self.tree.root)],[0,1,1,2,2,5,10,18,19,142])
+
+        self.assertEqual([x.data for x in 
+        self.tree.postorder_traverse(self.tree.root)],[0,1,2,2,1,18,10,142,19,5])
+
 unittest.main()

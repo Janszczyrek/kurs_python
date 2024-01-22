@@ -1,20 +1,3 @@
-#   Projekt zaliczeniowy kursu z języka Python 23/24
-#   Janusz Waluś
-#
-#   Implementacja drzewa czerwono-czarnego obsługującego operacje insert, search oraz clear.
-#   Projekt w dużej mierze bazuje na implementacji ze strony geeksforgeeks (https://www.geeksforgeeks.org/introduction-to-red-black-tree)
-#   która została zmodyfikowana oraz uzupełniona o metodę zwracającą czarną wysokośc drzewa, generatory pozwalające iterować po drzewie
-#   w kolejności preorder, inorder i postorder, oraz testy sprawdzające, czy podane drzewo spełnia własności czerwono-czarne.
-#
-#   Drzewa czerwono-czarne są samobalansującymi drzewami poszukiwania binarnego spełniającymi następujące własności:
-#   1. Każdy węzeł jest czerwony lub czarny.
-#   2. Korzeń drzewa jest czarny.
-#   3. Czerwony węzeł nie ma czerwonego syna.
-# 4. Ścieżki z dowolnego węzła do liści przechodza przez tą samą ilość
-# czarnych węzłów.
-
-# Wymagania te gwarantują, że drzewo czerwono-czarne ma wysokość co
-# najwyżej 2log(n+1)
 class RBtree:
     def __init__(self):
         self.root = None
@@ -90,20 +73,20 @@ class RBtree:
 
     def inorder_traverse(self, node):
         if node:
-            yield from self.inorder_traverse(node.leftChild) if node.leftChild else ()
+            yield from self.inorder_traverse(node.leftChild)
             yield node
-            yield from self.inorder_traverse(node.rightChild) if node.rightChild else ()
+            yield from self.inorder_traverse(node.rightChild)
 
     def preorder_traverse(self, node):
         if node:
             yield node
-            yield from self.preorder_traverse(node.leftChild) if node.leftChild else ()
-            yield from self.preorder_traverse(node.rightChild) if node.rightChild else ()
+            yield from self.preorder_traverse(node.leftChild)
+            yield from self.preorder_traverse(node.rightChild)
 
     def postorder_traverse(self, node):
         if node:
-            yield from self.postorder_traverse(node.leftChild) if node.leftChild else ()
-            yield from self.postorder_traverse(node.rightChild) if node.rightChild else ()
+            yield from self.postorder_traverse(node.leftChild)
+            yield from self.postorder_traverse(node.rightChild)
             yield node
 
     def __insert_node(self, node, data):
@@ -232,17 +215,31 @@ class RBtree:
     def inorder_print(self):
         for node in self.inorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent}, 
+                leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
 
     def preorder_print(self):
         for node in self.preorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent}, 
+                leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
 
     def postorder_print(self):
         for node in self.postorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent}, 
+                leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
+    def tree_print(self):
+        self.tree_print_helper(self.root)
+
+    def tree_print_helper(self,node,level=0):
+        if node is None:
+            return
+        self.tree_print_helper(node.rightChild,level+1)
+        color = 'R' if node.color is self.RBnode.RED else 'B'
+        print(f"{'    '*level} {node.data}({color})")
+        self.tree_print_helper(node.leftChild,level+1)
+        

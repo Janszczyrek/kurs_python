@@ -16,6 +16,8 @@ tree.inorder_print()
 print("***postorder***")
 tree.postorder_print()
 
+tree.tree_print()
+
 node5 = tree.search(5)
 print(node5)
 
