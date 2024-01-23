@@ -233,13 +233,13 @@ class RBtree:
                 leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
     def tree_print(self):
-        self.tree_print_helper(self.root)
+        self.__tree_print_helper(self.root)
 
-    def tree_print_helper(self,node,level=0):
+    def __tree_print_helper(self,node,level=0):
         if node is None:
             return
-        self.tree_print_helper(node.rightChild,level+1)
+        self.__tree_print_helper(node.rightChild,level+1)
         color = 'R' if node.color is self.RBnode.RED else 'B'
         print(f"{'    '*level} {node.data}({color})")
-        self.tree_print_helper(node.leftChild,level+1)
+        self.__tree_print_helper(node.leftChild,level+1)
         
