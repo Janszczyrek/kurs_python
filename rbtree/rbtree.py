@@ -147,18 +147,18 @@ class RBtree:
                 if (
                     node.parent.leftChild is None
                     or node.parent.leftChild.color is self.RBnode.BLACK
-                ):
+                ): # wujek czarny - potrzebny obrot
                     if (
                         node.leftChild is not None
                         and node.leftChild.color is self.RBnode.RED
-                    ):
+                    ): # wstawiono wezel po lewej stronie
                         self.rl = True
                     elif (
                         node.rightChild is not None
                         and node.rightChild.color is self.RBnode.RED
-                    ):
+                    ): # wstawiono wezel po prawej stronie
                         self.ll = True
-                else:
+                else: # wujek czerwony - zmień kolor jego i rodzica na czarny, dziadka na czerwony
                     node.parent.leftChild.color = self.RBnode.BLACK
                     node.color = self.RBnode.BLACK
                     if node.parent is not self.root:
@@ -167,18 +167,18 @@ class RBtree:
                 if (
                     node.parent.rightChild is None
                     or node.parent.rightChild.color is self.RBnode.BLACK
-                ):
+                ): # wujek czarny - potrzebny obrot
                     if (
                         node.leftChild is not None
                         and node.leftChild.color is self.RBnode.RED
-                    ):
+                    ): # wstawiono wezel po lewej stronie
                         self.rr = True
                     elif (
                         node.rightChild is not None
                         and node.rightChild.color is self.RBnode.RED
-                    ):
+                    ): # wstawiono wezel po prawej stronie
                         self.lr = True
-                else:
+                else:  # wujek czerwony - zmień kolor jego i rodzica na czarny, dziadka na czerwony
                     node.parent.rightChild.color = self.RBnode.BLACK
                     node.color = self.RBnode.BLACK
                     if node.parent is not self.root:
