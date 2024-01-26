@@ -215,22 +215,22 @@ class RBtree:
     def inorder_print(self):
         for node in self.inorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, 
-                leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent},", 
+                f"leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
 
     def preorder_print(self):
         for node in self.preorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, 
-                leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent},", 
+                f"leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
 
     def postorder_print(self):
         for node in self.postorder_traverse(self.root):
             print(
-                f"node={node}, parent={node.parent}, 
-                leftChild={node.leftChild}, rightChild={node.rightChild}"
+                f"node={node}, parent={node.parent},", 
+                f"leftChild={node.leftChild}, rightChild={node.rightChild}"
             )
     def tree_print(self):
         self.__tree_print_helper(self.root)
